@@ -1,0 +1,15 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { workspace = true, features = ["full"] }
+clap = { workspace = true, features = ["derive", "env"] }
+log = { workspace = true }
+rustls = { workspace = true, features = ["ring", "std"] }
+serde = { workspace = true }
+quinn = { workspace = true, features = ["ring", "runtime-tokio", "futures-io"] }
+tracing-subscriber = { workspace = true, features = ["env-filter", "std"] }
+anyhow = { workspace = true }
+custom-utils = { path = "../../packages/utils" }
