@@ -3,9 +3,11 @@ independent = true
 
 [workspace]
 resolver = "2"
-members = [ "bin/client","bin/server", "packages/cert-utils", "packages/utils"]
+members = [ "bin/client", "bin/p2p-sample","bin/server", "packages/cert-utils", "packages/utils"]
 
 [workspace.dependencies]
+p2p = { package = "atm0s-small-p2p", git = "https://github.com/marverlous811/atm0s-small-p2p", rev = "cf2b2d4f464aa9940569bfb39e4d9e2ccf1e1556" }
+
 tokio = "1"
 clap = "4"
 log = "0.4"
@@ -17,3 +19,4 @@ quinn = "0.11.2"
 rustls = "0.23.5"
 rcgen = "0.13"
 anyhow = "1.0"
+reedline-repl-rs = "1.2.1"
