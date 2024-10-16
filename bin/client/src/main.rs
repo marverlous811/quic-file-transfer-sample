@@ -1,6 +1,7 @@
 use std::{
     net::SocketAddr,
     sync::Arc,
+    thread::sleep,
     time::{Duration, Instant},
 };
 
@@ -101,6 +102,7 @@ async fn run(
                 send.write_all(&buf[..len]).await.unwrap();
                 transported_len += len;
                 log::info!("tranfered {transported_len}/{file_len} to server");
+                sleep(Duration::from_micros(100));
             }
 
             let end = start.elapsed();
