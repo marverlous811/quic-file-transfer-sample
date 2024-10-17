@@ -80,26 +80,28 @@ fn transfer(
         if let Ok(mut stream) = stream {
             log::info!("opened stream to server");
 
-            if let Ok(mut file) = File::open(&file_to_transfer).await {
+            if let Ok(file) = File::open(&file_to_transfer).await {
                 let file_len = file.metadata().await.unwrap().len();
                 let start = Instant::now();
-                let mut buf = vec![0u8; MTU_SIZE];
-                let mut transported_len = 0;
-                loop {
-                    let len = file.read(&mut buf).await.unwrap();
-                    if len == 0 {
-                        break;
-                    }
+                let content: Vec<u8> = read_file_util(&file_to_transfer).await;
+                stream.write_all(&content).await.unwrap();
+                // let mut buf = vec![0u8; MTU_SIZE];
+                // let mut transported_len = 0;
+                // loop {
+                //     let len = file.read(&mut buf).await.unwrap();
+                //     if len == 0 {
+                //         break;
+                //     }
 
-                    // let _ = requester
-                    //     .send_unicast(peer_id, buf[..len].to_vec())
-                    //     .await;
-                    stream.write_all(&buf[..len]).await.unwrap();
-                    transported_len += len;
-                    log::info!(
-                        "tranfered {transported_len}/{file_len} to server"
-                    );
-                }
+                //     // let _ = requester
+                //     //     .send_unicast(peer_id, buf[..len].to_vec())
+                //     //     .await;
+                //     stream.write_all(&buf[..len]).await.unwrap();
+                //     transported_len += len;
+                //     log::info!(
+                //         "tranfered {transported_len}/{file_len} to server"
+                //     );
+                // }
 
                 let end = start.elapsed();
                 log::info!(
